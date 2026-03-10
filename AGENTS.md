@@ -80,17 +80,20 @@ PAPERCLIP_MIGRATION_PROMPT=never pnpm dev:once
 The config at `~/.paperclip/instances/default/config.json` already points to
 `postgresql://paperclip@localhost:54329/paperclip`.
 
-### Installed Agents (Company: My Company / MYC)
+### Installed Agents (Company: orchidea.digital / MYC)
 
-| Agent        | Role      | Reports To  | Adapter       |
-|-------------|-----------|-------------|---------------|
-| CEO          | ceo       | —           | claude_local  |
-| CTO          | cto       | CEO         | claude_local  |
-| PM           | pm        | CEO         | claude_local  |
-| ClaudeCoder  | engineer  | CTO         | claude_local  |
-| CodexCoder   | engineer  | CTO         | codex_local   |
-| Designer     | designer  | CTO         | claude_local  |
-| QA           | qa        | CTO         | claude_local  |
+orchidea.digital is a dev/tech agency. Agents are configured to run client software projects.
+Agent instructions: `agents/<slug>/AGENTS.md`. Company manifest: `companies/orchidea-digital/manifest.json`.
+
+| Agent        | Role      | Reports To  | Adapter       | Instructions                              |
+|-------------|-----------|-------------|---------------|-------------------------------------------|
+| CEO          | ceo       | —           | claude_local  | agents/ceo/AGENTS.md                      |
+| CTO          | cto       | CEO         | claude_local  | agents/cto/AGENTS.md                      |
+| PM           | pm        | CEO         | claude_local  | agents/pm/AGENTS.md                       |
+| ClaudeCoder  | engineer  | CTO         | claude_local  | agents/claudecoder/AGENTS.md              |
+| CodexCoder   | engineer  | CTO         | codex_local   | agents/codexcoder/AGENTS.md               |
+| Designer     | designer  | CTO         | claude_local  | agents/designer/AGENTS.md                 |
+| QA           | qa        | CTO         | claude_local  | agents/qa/AGENTS.md                       |
 
 To get shell exports for an agent (e.g. to run a heartbeat manually):
 
