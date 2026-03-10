@@ -50,4 +50,15 @@ EOF
   echo "[paperclip] Exported PAPERCLIP_* env vars for ClaudeCoder agent"
 fi
 
-echo "[paperclip] Session ready — Paperclip UI: $PAPERCLIP_URL"
+# ── 4. Start UI proxy on 0.0.0.0:3101 so browser can reach the UI ────────────
+if curl -sf "http://localhost:3101/api/health" &>/dev/null; then
+  echo "[paperclip] UI proxy already running on port 3101"
+else
+  echo "[paperclip] Starting UI proxy on 0.0.0.0:3101..."
+  nohup node /home/user/paperclip/scripts/proxy.mjs \
+    > /root/.paperclip/instances/default/logs/proxy.log 2>&1 &
+  sleep 1
+  echo "[paperclip] UI proxy started"
+fi
+
+echo "[paperclip] Session ready — Paperclip UI (browser): http://localhost:3101"
