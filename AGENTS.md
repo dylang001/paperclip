@@ -56,6 +56,49 @@ rm -rf data/pglite
 pnpm dev
 ```
 
+## 4a. Dev Setup (Root / System PostgreSQL)
+
+When running as root, embedded PostgreSQL is not supported. Use the system
+PostgreSQL instead (already initialized at `/var/lib/paperclip/db`, port 54329).
+
+```sh
+# Start everything with one command:
+./scripts/start-dev.sh
+```
+
+Or manually:
+
+```sh
+# Start system postgres (if not running)
+su -s /bin/bash postgres -c \
+  "/usr/lib/postgresql/16/bin/pg_ctl -D /var/lib/paperclip/db -l /var/lib/paperclip/postgres.log -o '-p 54329' start"
+
+# Start Paperclip server (config reads from ~/.paperclip/instances/default/config.json)
+PAPERCLIP_MIGRATION_PROMPT=never pnpm dev:once
+```
+
+The config at `~/.paperclip/instances/default/config.json` already points to
+`postgresql://paperclip@localhost:54329/paperclip`.
+
+### Installed Agents (Company: My Company / MYC)
+
+| Agent        | Role      | Reports To  | Adapter       |
+|-------------|-----------|-------------|---------------|
+| CEO          | ceo       | —           | claude_local  |
+| CTO          | cto       | CEO         | claude_local  |
+| PM           | pm        | CEO         | claude_local  |
+| ClaudeCoder  | engineer  | CTO         | claude_local  |
+| CodexCoder   | engineer  | CTO         | codex_local   |
+| Designer     | designer  | CTO         | claude_local  |
+| QA           | qa        | CTO         | claude_local  |
+
+To get shell exports for an agent (e.g. to run a heartbeat manually):
+
+```sh
+COMPANY_ID="ecbdbf73-50ed-40a1-8625-b756c3e58d15"
+pnpm paperclipai agent local-cli claudecoder --company-id $COMPANY_ID
+```
+
 ## 5. Core Engineering Rules
 
 1. Keep changes company-scoped.
