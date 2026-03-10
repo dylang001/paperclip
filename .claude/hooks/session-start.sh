@@ -1,6 +1,8 @@
 #!/bin/bash
 set -euo pipefail
 
+echo '{"async": true, "asyncTimeout": 300000}'
+
 POSTGRES_DATA="/var/lib/paperclip/db"
 POSTGRES_PORT=54329
 POSTGRES_LOG="/var/lib/paperclip/postgres.log"
